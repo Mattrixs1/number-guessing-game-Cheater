@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number Guess Cheater</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 260px;
+      background: #0a0a0f;
+      color: #e0e0e0;
+      font-family: 'Share Tech Mono', monospace;
+      overflow: hidden;
+    }
+
+    .scanline {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,255,160,0.015) 2px,
+        rgba(0,255,160,0.015) 4px
+      );
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    header {
+      background: #0d1f18;
+      border-bottom: 1px solid #00ff9c33;
+      padding: 14px 16px 10px;
+    }
+
+    .title {
+      font-family: 'Orbitron', monospace;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: #00ff9c;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    .subtitle {
+      font-size: 10px;
+      color: #4a6a5a;
+      margin-top: 2px;
+      letter-spacing: 1px;
+    }
+
+    .main {
+      padding: 20px 16px;
+    }
+
+    .label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: #4a6a5a;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .value-box {
+      background: #0d1f18;
+      border: 1px solid #00ff9c44;
+      border-radius: 4px;
+      padding: 16px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .value-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #00ff9c, transparent);
+      animation: scan 3s linear infinite;
+    }
+
+    @keyframes scan {
+      0% { left: -60%; }
+      100% { left: 160%; }
+    }
+
+    .number {
+      font-family: 'Orbitron', monospace;
+      font-size: 52px;
+      font-weight: 700;
+      color: #00ff9c;
+      text-shadow: 0 0 20px #00ff9c66, 0 0 40px #00ff9c33;
+      line-height: 1;
+      letter-spacing: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .number.loading {
+      font-size: 14px;
+      color: #4a6a5a;
+      letter-spacing: 2px;
+      text-shadow: none;
+    }
+
+    .number.error {
+      font-size: 12px;
+      color: #ff4466;
+      text-shadow: 0 0 10px #ff446644;
+      letter-spacing: 1px;
+    }
+
+    .range-hint {
+      font-size: 10px;
+      color: #4a6a5a;
+      margin-top: 8px;
+      letter-spacing: 1px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      margin-top: 14px;
+      padding: 10px;
+      background: transparent;
+      border: 1px solid #00ff9c44;
+      border-radius: 4px;
+      color: #00ff9c;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background: #00ff9c11;
+      border-color: #00ff9c88;
+      box-shadow: 0 0 12px #00ff9c22;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .status-bar {
+      border-top: 1px solid #00ff9c22;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #4a6a5a;
+    }
+
+    .dot.active {
+      background: #00ff9c;
+      box-shadow: 0 0 6px #00ff9c;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .status-text {
+      font-size: 10px;
+      color: #4a6a5a;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+  <div class="scanline"></div>
+
+  <header>
+    <div class="title">Cheat Module</div>
+    <div class="subtitle">number-guessing-game.exe</div>
+  </header>
+
+  <div class="main">
+    <div class="label">// numberToGuess</div>
+    <div class="value-box">
+      <div class="number loading" id="display">SCANNING...</div>
+      <div class="range-hint" id="hint"></div>
+    </div>
+    <button class="btn" id="refresh-btn">⟳ &nbsp;Neu auslesen</button>
+  </div>
+
+  <div class="status-bar">
+    <div class="dot" id="status-dot"></div>
+    <div class="status-text" id="status-text">Verbinde...</div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
